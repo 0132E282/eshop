@@ -8,7 +8,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            @include('includes.slider.popular-slider-product')
+            @include('includes.products.popular-slider-product')
         </div>
     </div>
 </div>

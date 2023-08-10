@@ -4,3 +4,12 @@
 .hover-block:hover {
     display: block;
 }
+
+*::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar {
+    overflow-y: scroll;
+    ms-overflow-style: none;
+    scrollbar-width: none;
+  }

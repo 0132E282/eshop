@@ -8,13 +8,13 @@
         @include('includes.home.slider')
     </section>
     <section class="small-banner section">
-        @include('includes.home.banner.small-banner')
+        @include('includes.banner.small-banner')
     </section>
     <section class="product-area section">
         @include('includes.home.products-area')
     </section>
     <section class="midium-banner">
-        @include('includes.home.banner.midium-banner')
+        @include('includes.banner.midium-banner')
     </section>
     <div class="product-area most-popular section">
         @include('includes.home.most-popular')
@@ -22,9 +22,11 @@
     <section class="shop-home-list section">
         @include('includes.home.shop-home-list')
     </section>
+    @if(isset($productSell))
     <section class="cown-down">
         @include('includes.home.cown-down')
     </section>
+    @endif
     <section class="shop-blog section">
         @include('includes.home.blog-shop')
     </section>

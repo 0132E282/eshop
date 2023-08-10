@@ -1,11 +1,10 @@
 <h4 class="d-flex justify-content-between align-items-center mb-3">
-    <span class="text-muted">Your cart</span>
-    <span class="badge badge-secondary badge-pill">3</span>
+    <span class="text-muted">giỏ hàng</span>
+    <span class="badge badge-secondary badge-pill">{{count(Session::get('product_cart'))}}</span>
 </h4>
 <ul class="list-group mb-3">
     @if(Session::has('product_cart'))
     @foreach(Session::get('product_cart') as $key => $cartItem)
-
     <li class="list-group-item d-flex justify-content-between lh-condensed">
         @include('includes/cart/cart-card')
     </li>

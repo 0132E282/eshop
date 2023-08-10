@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-@php
-include('router/config-router.php');
-@endphp
-
-
 
 <head>
 	@yield('seo')
@@ -43,13 +38,12 @@ include('router/config-router.php');
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
-<body>
-
-	<main>
+<body style="min-height: 100vh;">
+	<main class="d-flex flex-column" style="height: 100%;">
 		<header>
 			@include('includes.common.header.header-web.index')
 		</header>
-		<div class="component">
+		<div class="component flex-grow-1">
 			@yield('content')
 		</div>
 		<footer class="footer">

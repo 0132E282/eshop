@@ -13,12 +13,16 @@ use Illuminate\Pagination\Paginator;
 
 class ProductsController extends Controller
 {
-   function index()
+   function index($text = '')
    {
       $tabletList = array(
          'tên', '	hình ảnh', '	giá', 'giá khuyến mãi', 'số lượt xem', 'ngày đăng'
       );
-      $dataProduct = DB::table('sanpham')->select('*')->limit(25)->orderBy('created_at', 'DESC')->paginate(25);
+      $dataProduct = DB::table('sanpham')->select('*')->join('loai', 'sanpham.id_loai', '=', 'loai.id_loai')->limit(25)->orderBy('sanpham.created_at', 'DESC');
+      if ($text) {
+         $dataProduct->where('ten_loai', '=', $text);
+      }
+      $dataProduct =  $dataProduct->paginate(25);
       $tagList =  Loaisanpham::all();
       return View(
          'pages.products.tablet',
@@ -84,8 +88,14 @@ class ProductsController extends Controller
    {
       $hotListProduct = DB::table('sanpham')->where('hot', '=', 1)->orderBy('ngay', 'asc')->limit('8')->get();
 
-      $productDetails = DB::table('sanpham')->select('*')->where('id_sp', '=', $id)->first();
+      $productDetails = DB::table('sanpham')->select('*')->where('id_sp', '=', $id)->join('loai', 'sanpham.id_loai', '=', 'loai.id_loai')->first();
       $productParameter = DB::table('sanphamchitiet')->select('RAM', 'CPU', 'Cannang')->where('id_sp', '=', $id)->first();
+      $productDetails->sli_images = [
+         $productDetails->hinh,
+         'https://cdn.tgdd.vn/Products/Images/44/292397/Slider/vi-vn-dell-vostro-5620-i5-v6i5001w1-slider-1.jpg',
+         'https://cdn.tgdd.vn/Products/Images/44/292397/Slider/vi-vn-dell-vostro-5620-i5-v6i5001w1-slider-1.jpg',
+         'https://cdn.tgdd.vn/Products/Images/44/292397/Slider/vi-vn-dell-vostro-5620-i5-v6i5001w1-slider-1.jpg',
+      ];
       return view('pages.products.details', ['productDetails' => $productDetails, 'productParameter' => $productParameter, 'hotListProduct' => $hotListProduct,]);
    }
    function create(ValidateFormCreateProduct $validate)
@@ -101,10 +111,10 @@ class ProductsController extends Controller
 
             $sp = new Sanpham();
             $sp->id_loai = $_POST['loai'] ?? 0;
-            $sp->ten_sp = $_POST['ten_sp'] ?? '';
+            $sp->ten_sp = $_POST['ten_sp'] ?? 'http://127.0.0.1:8000/assets-web/images/products/defau.jpeg';
             $sp->hinh = $storedPath ?? '';
             // https://www.w3schools.com/php/func_var_intval.asp => chả về giá trị nguyên của môt biến
-            // https://www.w3schools.com/PHP/func_string_str_replace.asp => tìm kiếm và thấy thế các ký tưj
+            // https://www.w3schools.com/PHP/func_string_str_replace.asp => tìm kiếm và thấy thế các ký tự
             $sp->gia =  intval(str_replace(',', '', $_POST['gia'])) ?? '';
             $sp->gia_km = intval(str_replace(',', '', $_POST['gia_km'])) ?? '';
             $sp->ngay = date('Y-m-d H:i:s');

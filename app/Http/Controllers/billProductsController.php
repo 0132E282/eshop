@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donhang;
 use App\Models\Donhangchitiet;
-use App\Models\Sanpham;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class billProductsController extends Controller
@@ -16,8 +13,8 @@ class billProductsController extends Controller
     // Take out all the products from the session the display to view
     function showCart(Request $request)
     {
-        $productListSession =  $request->session()->get('product_cart') ?? [];
-        return View('pages.products.cart', ['productBillList' =>   $productListSession]);
+        $productListSession =  $request->session()->get('product_cart', []);
+        return View('pages/cart/index', ['productBillList' =>   $productListSession]);
     }
 
 
@@ -29,13 +26,13 @@ class billProductsController extends Controller
         if ($productId) {
             $productCart = session()->get('product_cart', []);
             if (isset($productCart[$productId])) {
-                $productCart[$productId]['quantity'] += (int)$request->post('quant');
+                $productCart[$productId]['quantity'] += intval($request->post('quant')[1]);
             } else {
                 $productCart[$productId] = [
                     'product_name' => $product->ten_sp,
                     'url_image' => $product->hinh,
                     'price' => $product->gia,
-                    'quantity' => (int)$request->post('quant')
+                    'quantity' => intval($request->post('quant')[1])
                 ];
             }
             session()->put('product_cart',  $productCart);
@@ -44,15 +41,14 @@ class billProductsController extends Controller
     }
 
     // Remove product with the requested id
-    function deleteProductCart(Request $request, $productId)
+    function delete(Request $request, $productId)
     {
-        $productCartSession = session()->get('product_cart', []);
+        $productCartSession = session()->get('product_cart');
         if (isset($productCartSession[$productId])) {
             unset($productCartSession[$productId]);
             session()->put('product_cart', $productCartSession);
         }
-        echo 1;
-        return;
+        return back();
     }
     function showFormCheckout()
     {

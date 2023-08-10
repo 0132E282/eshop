@@ -32,7 +32,6 @@ class validateFormCreateProduct extends FormRequest
         return [
             'ten_sp.required' => 'vui lòng nhập tên sản phẩm',
             'gia.required' => 'bạn vui lồng nhập giá sản phẩm',
-
         ];
     }
 }

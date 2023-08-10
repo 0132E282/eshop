@@ -10,4 +10,5 @@ Route::post('/create', [ProductsController::class, 'create'])->name('action-crea
 Route::get('/create', [ProductsController::class, 'showForm'])->name('create-product-page');
 Route::post('/{id}', [ProductsController::class, 'update'])->name('action-update-product');
 Route::get('/{id}', [ProductsController::class, 'showForm'])->name('update-product-page');
+Route::get('/type/{text}', [ProductsController::class, 'index'])->name('searchProducts');
 Route::get('/', [ProductsController::class, 'index'])->name('product');

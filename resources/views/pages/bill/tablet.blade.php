@@ -6,7 +6,7 @@
 @stop
 @section('content')
 <div class="bg-secondary-subtle px-2 py-3 d-flex justify-content-between ">
-  @include ('includes.action')
+  @include ('includes/action/control')
 </div>
 <table class="table table-hover">
   <thead class="table-dark">
@@ -14,7 +14,6 @@
       <th scope="col">
         <input class="form-check-input" type="checkbox">
       </th>
-      <th scope="col">stt</th>
       @foreach ($tablet as $item)
       <th scope="col">{{$item}}</th>
       @endforeach
@@ -24,21 +23,45 @@
     @foreach($billList as $index => $item)
     @php $qantity = 0; $sumPrice = 0 @endphp
 
-    <tr class="accordion" style="cursor: pointer; position: relative;" data-bs-toggle="collapse" data-bs-target="#collapse{{ $index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">
+    <tr class="accordion" style="cursor: pointer; position: relative;">
       <th scope="row" style="width:40px;">
         <input class="form-check-input" type="checkbox" value="{{$item->id_dh}}">
       </th>
-      <th scope="row">{{++$index}} </th>
       <td>{{$item->id_dh}}</td>
-      <td>{{$item->tennguoinhan}}</td>
-      <td>{{$item->diachigiaohang }}</td>
-      <td>hồ chí minh</td>
-      <td>{{$item->dienthoai }}</td>
-      <td>{{$item->created_at }}</td>
-      <td>{{$item->trangthai == 0 ? 'hưa giao hàng' : 'đã giao hàng' }}</td>
+      <td data-bs-toggle="collapse" data-bs-target="#collapse{{$index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">{{$item->tennguoinhan}}</td>
+      <td data-bs-toggle="collapse" data-bs-target="#collapse{{$index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">{{$item->diachigiaohang }}</td>
+      <td data-bs-toggle="collapse" data-bs-target="#collapse{{$index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">hồ chí minh</td>
+      <td data-bs-toggle="collapse" data-bs-target="#collapse{{$index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">{{$item->dienthoai }}</td>
+      <td data-bs-toggle="collapse" data-bs-target="#collapse{{$index }}" aria-expanded="false" aria-controls="collapse{{ $index }}">{{$item->created_at }}</td>
+      <td class="d-flex justify-content-center align-items-center">
+        <div class="dropdown">
+          <div class="border border-5 rounded-circle " data-bs-toggle="dropdown" aria-expanded="false" style="width: 20px; height: 20px;"></div>
+
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item d-flex justify-content-start align-items-center " href="#">
+                <span class="border border-5 rounded-circle d-inline-block me-2" data-bs-toggle="dropdown" aria-expanded="false" style="width: 20px; height: 20px;"></span>
+                <span>chuẩn bị hàng hóa</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                <span class="border border-5 border-primary  rounded-circle d-inline-block  me-2" data-bs-toggle="dropdown" aria-expanded="false" style="width: 20px; height: 20px;"></span>
+                <span> đang vân chuyển</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex justify-content-start align-items-center" href="#">
+                <span class="border border-5 border-success  rounded-circle d-inline-block  me-2" data-bs-toggle="dropdown" aria-expanded="false" style="width: 20px; height: 20px;"></span>
+                <span>đã giao</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td colspan="{{count($billList)}}" id="collapse{{ --$index }}" class="accordion-collapse collapse" data-bs-parent="accordionExample">
+      <td colspan="{{count($billList)}}" id="collapse{{ $index }}" class="accordion-collapse collapse" data-bs-parent="accordionExample">
         <div class="accordion-body">
           <table class="table">
             <thead>

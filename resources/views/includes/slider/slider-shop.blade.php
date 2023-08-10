@@ -3,7 +3,7 @@
     <h3 class="title">Categories</h3>
     <ul class="categor-list">
         @foreach ($categories as $category)
-        <li><a href="shop?type={{$category->id_loai}}">{{$category->ten_loai ?? ''}}</a></li>
+        <li><a href="shop?text-search={{$category->ten_loai}}">{{$category->ten_loai ?? ''}}</a></li>
         @endforeach
     </ul>
 </div>

@@ -1,20 +1,24 @@
 <div class="tab-single">
     <div class="row">
         <div class="col-12">
+            {!!$productDetails->mota!!}
             <div class="single-des">
-                <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with deskto</p>
-            </div>
-            <div class="single-des">
-                <p>Suspendisse consequatur voluptates lorem nobis accumsan natus mattis. Optio pede, optio qui metus, delectus! Ultricies impedit, minus tempor fuga, quasi, pede felis commodo bibendum voluptas nisi? Voluptatem risus tempore tempora. Quaerat aspernatur? Error praesent laoreet, cras in fames hac ea, massa montes diamlorem nec quaerat, quos occaecati leo nam aliquet corporis, ab recusandae parturient, etiam fermentum, a quasi possimus commodi, mollis voluptate mauris mollis, quisque donec</p>
-            </div>
-            <div class="single-des">
-                <h4>Product Features:</h4>
-                <ul>
-                    <li>long established fact.</li>
-                    <li>has a more-or-less normal distribution. </li>
-                    <li>lmany variations of passages of. </li>
-                    <li>generators on the Interne.</li>
-                </ul>
+                <table class="table" style="max-width: 400px;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col" colspan="2">thông số sản phẩm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach($productParameter as $key => $value )
+                        <tr>
+                            <td>{{$key}}</td>
+                            <td>{{$value}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -51,7 +51,7 @@
                         <i class="ti-minus text-black"></i>
                     </button>
                 </div>
-                <input type="text" name="quant" style=" width:40px;" class=" border-0 input-number text-center" data-min="1" data-max="1000" value="1">
+                <input type="text" name="quant[1]" style=" width:40px;" class=" border-0 input-number text-center" data-min="1" data-max="1000" value="1">
                 <div class="button plus " style="width: 40px;">
                     <button type="button" class="btn border-0 btn-primary  bg-white btn-number" data-type="plus" data-field="quant[1]">
                         <i class="ti-plus text-black"></i>
@@ -68,6 +68,6 @@
 
     </form>
 
-    <p class="cat">Category :<a href="#">Clothing</a></p>
+    <p class="cat">loại sản phẩm :<a href="{{route('shop-page').'?text-search='.$productDetails->ten_loai.''}}">{{$productDetails->ten_loai}}</a></p>
     <p class="availability">Availability : 180 Products In Stock</p>
 </div>

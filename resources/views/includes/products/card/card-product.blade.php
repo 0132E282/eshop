@@ -1,10 +1,6 @@
-@php
-include('router/config-router.php');
-@endphp
-
 <div class="single-product">
     <div class="product-img" style="max-width: 400px;">
-        <a href="{{$shop}}/{{$product->id_sp?? 0}}">
+        <a href="{{route('details-page',$product->id_sp)}}">
             <img class="default-img" src="{{$product-> hinh ?? 'https://via.placeholder.com/550x750'}} " alt="#" style="max-width: 550px;">
             <img class="hover-img" src="https://via.placeholder.com/550x750" alt="#">
         </a>
@@ -20,7 +16,7 @@ include('router/config-router.php');
         </div>
     </div>
     <div class="product-content">
-        <h3><a href="{{$shop}}/{{$product->id_sp?? 0}}">{{$product -> ten_sp ?? ''}}</a></h3>
+        <h3><a href="{{route('details-page',$product->id_sp)}}">{{$product -> ten_sp ?? ''}}</a></h3>
         <div class="product-price">
             <span>{{number_format( 0+str_replace(",","",$product -> gia))}} VND</span>
         </div>

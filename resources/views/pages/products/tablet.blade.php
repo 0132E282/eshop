@@ -6,7 +6,7 @@
 @stop
 @section('content')
 <div class="bg-secondary-subtle px-2 py-3 d-flex justify-content-between ">
-  @include ('includes.action')
+  @include ('includes.action.control')
 </div>
 @if(Session::has('message_successfully'))
 <div class="alert alert-primary " role="alert">

@@ -77,7 +77,6 @@
                         <div class="navbar-collapse">
                             <div class="nav-inner">
                                 <ul class="nav main-menu menu navbar-nav menu-main-list">
-
                                 </ul>
                             </div>
                         </div>
@@ -91,24 +90,24 @@
 <script>
     const mainMenu = document.querySelectorAll('.menu-main-list');
     const menuListArray = [{
-            title: 'chang chủ',
-            url: "{{$home}}",
+            title: 'trang chủ',
+            url: "{{route('home-page')}}",
         },
         {
             title: 'cửa hàng',
-            url: "{{$shop}}"
+            url: "{{route('shop-page')}}",
         },
         {
             title: 'dịch vụ',
-            url: "{{$services}}"
+            url: ""
         },
         {
             title: 'tin tức công nghệ',
-            url: "{{$blog}}"
+            url: "{{route('blog-page')}}",
         },
         {
             title: 'liên hện',
-            url: '"{{$contact}}"'
+            url: ""
         }
     ]
     mainMenu.forEach((item) => {

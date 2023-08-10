@@ -3,7 +3,7 @@ $total = 0;
 @endphp
 <a href="/cart" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{Session::has('product_cart') ? count(Session::get('product_cart')) : 0}}</span></a>
 <!-- Shopping Item -->
-<div class="shopping-item">
+<div class="shopping-item" style="top: 24px; right: -19px;">
 
     <div class="dropdown-cart-header">
         <span>{{ Session::has('product_cart') ? count(Session::get('product_cart')) : 0}}</span>
@@ -27,7 +27,6 @@ $total = 0;
             <span>Total</span>
             <span class="total-amount">{{number_format( 0+str_replace(",","",$total))}} VND</span>
         </div>
-
-        <a href="checkout.html" class="btn animate">Checkout</a>
+        <a href=" {{Session::has('product_cart')  ? '/cart/checkout':'' }}" class="btn animate">Checkout</a>
     </div>
 </div>
