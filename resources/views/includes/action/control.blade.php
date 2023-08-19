@@ -31,7 +31,7 @@
   <div class="col-auto">
     <label class="visually-hidden" for="autoSizingSelect">sap xep</label>
     <select class="form-select" id="autoSizingSelect" onchange="handleGetTypeProduct(event)">
-      <option checkdate>tất cả</option>
+      <option value="{{route('product')}}" checkdate>tất cả</option>
       @foreach($tagList as $tag)
 
       <option value="{{route('searchProducts',$tag->ten_loai)}}" {{Route::current()->parameter('text') === $tag->ten_loai ? 'selected' : ''}}>{{$tag->ten_loai}}</option>
@@ -42,8 +42,8 @@
   <div class="col-auto">
     <div class="dropdown" style="width: 340px;">
       <div class="input-group">
-        <input type="text" class="form-control search-control" aria-expanded="true" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-        <button class="btn btn-primary" onclick="handleSearchInput()">
+        <input type="text" class="form-control search-control" aria-expanded="true" placeholder="tìm kiếm sản phẩm ..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <button class="btn btn-primary showList" onclick="handleSearchInput()">
           <i class="bi bi-search"></i>
         </button>
       </div>
@@ -53,17 +53,17 @@
   </div>
 </div>
 <div class="btn-group" role="group" aria-label="Basic example">
-  <a href="/admin/products/create" type="button" class="btn btn-primary">create</a>
-  <button type="button" class="btn btn-primary" onclick="handleClickAcoinDelete(event)">delete</button>
-  <button type="button" class="btn btn-primary">update</button>
+  <a href="{{route('create-product-page')}}" type="button" class="btn btn-primary">tạo mới</a>
+  <button type="button" class="btn btn-primary" onclick="handleClickAcoinDelete(event)">xóa </button>
 </div>
 <a href="" class="links"></a>
 <script>
   const links = document.querySelector('.links');
+  const listMenu = document.querySelector('.list-menu');
+
   const handleSearchInput = function(e) {
     const searchInput = document.querySelector('.search-control');
     if (searchInput.value) {
-      const listMenu = document.querySelector('.list-menu');
       const formatter = new Intl.NumberFormat('en-US', {
         style: 'decimal'
       });
@@ -72,7 +72,7 @@
         .then(function(data) {
           const productList = data.map((item) => {
             return `<li style="width :100%;">
-             <a class="dropdown-item" href="#" style="width :100%;">
+             <a href="/admin/ecommerce/products/${item.id_sp}" class="dropdown-item" href="#" style="width :100%;">
                 <div class="card my-0" style="width :100%;" >
                   <div class="row g-0">
                     <div class="col-md-4 p-2" style="width:100px;">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-8">
                       <div class="card-body py-2 px-1">
-                        <h5 class="card-title" style="max-width:100%; overflow: hidden;  text-overflow: ellipsis; white-space: nowrap;">${item.ten_sp}</h5>
+                        <h5 class="card-title ellipsis">${item.ten_sp}</h5>
                         <p class="card-text my-0"> ${ formatter.format(item.gia)} VND</p>
                       </div>
                     </div>
@@ -95,6 +95,11 @@
         .catch(function(error) {
           console.log(error)
         });
+    }
+  }
+  window.onclick = function(e) {
+    if (!e.target.closest('.showList') && !e.target.closest('.list-menu')) {
+      listMenu.style.display = 'none';
     }
   }
   const handleToReqPage = function(e) {

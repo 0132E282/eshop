@@ -25,9 +25,9 @@ class ProductsController extends Controller
       $dataProduct =  $dataProduct->paginate(25);
       $tagList =  Loaisanpham::all();
       return View(
-         'pages.products.tablet',
+         'pages.table.tableProduct',
          [
-            'products' => $dataProduct,
+            'dataTablet' => $dataProduct,
             'tablet' => $tabletList,
             'tagList' => $tagList,
             'pages' => $dataProduct
@@ -97,6 +97,10 @@ class ProductsController extends Controller
          'https://cdn.tgdd.vn/Products/Images/44/292397/Slider/vi-vn-dell-vostro-5620-i5-v6i5001w1-slider-1.jpg',
       ];
       return view('pages.products.details', ['productDetails' => $productDetails, 'productParameter' => $productParameter, 'hotListProduct' => $hotListProduct,]);
+   }
+   function category()
+   {
+      return view('pages.products.category');
    }
    function create(ValidateFormCreateProduct $validate)
    {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,14 +39,18 @@ Route::prefix('blog')->group(function () {
 
 Route::prefix('admin')->group(function () {
     Route::middleware(['auth', 'checkAdmin'])->group(function () {
-        Route::get('/', function () {
-            return View('pages.site.home.homeAdmin');
-        })->name('admin-page');
+        Route::get('/', [SiteController::class, 'adminPage'])->name('admin-page');
         Route::prefix('ecommerce/products')->group(function () {
             include_once('includes/admin/product-router.php');
         })->name('products-admin');
         Route::prefix('ecommerce/bill')->group(function () {
             include_once('includes/admin/bill-router.php');
+        });
+        Route::prefix('/users')->group(function () {
+            include_once('includes/admin/user-router.php');
+        });
+        Route::prefix('post')->group(function () {
+            include_once('includes/admin/post-router.php');
         });
     });
     Route::get('/login', [authController::class, 'index'])->name('login-page');

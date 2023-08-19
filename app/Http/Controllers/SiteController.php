@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Donhang;
+use App\Models\Donhangchitiet;
 use App\Models\Sanpham;
 use Illuminate\Support\Facades\DB;
 
@@ -42,5 +44,12 @@ class SiteController extends Controller
     {
         $product = DB::table($type)->where('ten_sp', 'like', '%' . $text . '%')->get();
         return response()->json($product);
+    }
+    function adminPage()
+    {
+        $earnings = DB::table('donhangchitiet')->selectRaw("SUM(gia * soluong) as total, DATE_FORMAT(created_at, '%d-%b-%Y') as date")->groupBy('date')->get();
+        // $order = Donhangchitiet::all();
+        // return response()->json($earn);
+        return View('pages.site.home.homeAdmin', ['earnings' => $earnings]);
     }
 }

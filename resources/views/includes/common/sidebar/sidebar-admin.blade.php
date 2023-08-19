@@ -41,26 +41,55 @@
                   heading: 'ecommerce',
                   icon: 'ti ti-dots nav-small-cap-icon fs-4',
                   children: [{
-                          title: 'All',
+                          title: 'tất cả',
                           url: "{{route('product')}}",
                           icon: 'ti ti-box'
                       },
                       {
-                          title: 'create',
+                          title: 'thêm',
                           url: "{{route('create-product-page')}}",
-                          icon: 'ti ti-cube-plus'
+                          icon: 'ti ti-plus'
                       },
                       {
-                          title: 'navigate',
-                          url: "{{route('navigate')}}",
-                          icon: 'ti ti-sign-left-filled'
+                          title: 'điều hướng',
+                          url: "{{route('category')}}",
+                          icon: 'ti ti-sign-right'
                       },
                       {
-                          title: 'bill',
-                          url: "{{route('bill')}}",
-                          icon: 'ti ti-sign-left-filled'
+                          title: 'đơn hàng  ',
+                          url: "{{route('admin-bill')}}",
+                          icon: 'ti ti-file-invoice'
                       }
                   ]
+              },
+              {
+                  heading: 'user',
+                  icon: 'ti ti-dots nav-small-cap-icon fs-4',
+                  children: [{
+                          title: 'tài khoản',
+                          url: "{{route('admin-user')}}",
+                          icon: 'ti ti-users',
+                      },
+                      {
+                          title: 'thêm tài khoản',
+                          url: "{{route('add-user')}}",
+                          icon: 'ti ti-user-plus',
+                      },
+                      {
+                          title: 'thùng rác',
+                          url: "{{route('trash-user')}}",
+                          icon: 'ti ti-trash',
+                      }
+                  ]
+              },
+              {
+                  heading: 'post',
+                  icon: 'ti ti-dots nav-small-cap-icon fs-4',
+                  children: [{
+                      title: 'tất cả',
+                      url: "{{route('admin-post')}}",
+                      icon: 'bi bi-file-post',
+                  }]
               },
               {
                   heading: 'UI COMPONENTS',
@@ -92,15 +121,6 @@
                       }
 
                   ]
-              },
-              {
-                  heading: 'user',
-                  icon: 'ti ti-dots nav-small-cap-icon fs-4',
-                  children: [{
-                      title: 'account',
-                      url: '/',
-                      icon: 'ti ti-login',
-                  }]
               },
               {
                   heading: 'EXTRA',
