@@ -1,4 +1,4 @@
-<p align="center"><img src="https://drive.google.com/file/d/1PNN4MNvRz5tD-dEkbVVuco3syoXGIw4A/view?usp=drive_link" width="400" alt="eshop Logo"></p>
+<p align="center">![logo](https://github.com/0132E282/eshop/assets/93367209/8b1b2aaa-236b-433b-81ba-ae404f60bb6c)</p>
 
 ## Giới thiệu
 
