@@ -10,7 +10,7 @@ là trang web bán hàng thương mại điện tử được viết bằng lara
 - đặt hàng hàng
 - hủy sản phẩm từ giỏi hàng
 -  ....
--  
+-  tk Test : email admin01@gmail.com mk:12345678
 
 ## trang home
 
