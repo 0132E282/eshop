@@ -1,4 +1,4 @@
-<p align="center">![logo](https://github.com/0132E282/eshop/assets/93367209/8b1b2aaa-236b-433b-81ba-ae404f60bb6c)</p>
+<p align="center"><img src="https://github.com/0132E282/eshop/assets/93367209/8b1b2aaa-236b-433b-81ba-ae404f60bb6c"></p>
 
 ## Giới thiệu
 
