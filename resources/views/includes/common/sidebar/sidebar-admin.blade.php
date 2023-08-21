@@ -86,10 +86,16 @@
                   heading: 'post',
                   icon: 'ti ti-dots nav-small-cap-icon fs-4',
                   children: [{
-                      title: 'tất cả',
-                      url: "{{route('admin-post')}}",
-                      icon: 'bi bi-file-post',
-                  }]
+                          title: 'tất cả',
+                          url: "{{route('admin-post')}}",
+                          icon: 'bi bi-file-post',
+                      },
+                      {
+                          title: 'tạo sản phẩm',
+                          url: "{{route('create-post')}}",
+                          icon: 'bi bi-file-post',
+                      }
+                  ]
               },
               {
                   heading: 'UI COMPONENTS',

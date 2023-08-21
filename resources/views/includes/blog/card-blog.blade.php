@@ -1,10 +1,10 @@
 	<!-- Start Single Blog  -->
 	<div class="shop-single-blog">
-		<img src="https://via.placeholder.com/370x300" alt="#">
+		<img src="{{$post->thumb_url}}" alt="#">
 		<div class="content">
-			<p class="date">22 July, 2020. Monday</p>
-			<a href="blog/1" class="title">Women Fashion Festive</a>
-			<a href="blog/1" class="more-btn">Continue Reading</a>
+			<p class="date">{{$post->create_at}}</p>
+			<a href="{{route('detail-post',[$post->slug,$post->id_post])}}" class="title">{{$post->heading}}</a>
+			<a href="{{route('detail-post',[$post->slug,$post->id_post])}}" class="more-btn">Continue Reading</a>
 		</div>
 	</div>
 	<!-- End Single Blog  -->

@@ -22,6 +22,5 @@
     function handleShowModal() {
         const content = document.querySelector('.modal-body > .content');
         const title = document.querySelector('.modal-title');
-        console.log(title, content);
     }
 </script>

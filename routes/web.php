@@ -33,8 +33,8 @@ Route::prefix('shop')->group(function () {
     include_once('includes/web/shop-router.php');
 });
 
-Route::prefix('blog')->group(function () {
-    include_once('includes/web/blog-router.php');
+Route::prefix('post')->group(function () {
+    include_once('includes/web/post-router.php');
 });
 
 Route::prefix('admin')->group(function () {
@@ -43,7 +43,7 @@ Route::prefix('admin')->group(function () {
         Route::prefix('ecommerce/products')->group(function () {
             include_once('includes/admin/product-router.php');
         })->name('products-admin');
-        Route::prefix('ecommerce/bill')->group(function () {
+        Route::prefix('bill')->group(function () {
             include_once('includes/admin/bill-router.php');
         });
         Route::prefix('/users')->group(function () {

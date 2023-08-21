@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CommentControlle extends Controller
+class CommentController extends Controller
 {
-    //
+    function create()
+    {
+    }
 }

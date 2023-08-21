@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\validateFormBayProduct;
 use App\Models\Donhang;
 use App\Models\Donhangchitiet;
 use Exception;
@@ -56,33 +57,38 @@ class billProductsController extends Controller
     {
         return view('pages/cart/checkout');
     }
-    function createBill(Request $request)
+    function createBill(validateFormBayProduct $request)
     {
-        $donHang = new Donhang();
+        try {
+            $donHang = new Donhang();
 
-        if (!session()->has('product_cart')) {
-            return;
+            if (!session()->has('product_cart')) return back()->with('error', '');
+
+            $donHang->id_user = '11';
+            $donHang->thoidiemmua =  date('Y-m-d H:i:s');
+            $donHang->tennguoinhan = $request->input('firstName') . ' ' . $request->input('lastName');
+            $donHang->dienthoai = $request->input('phoneNumber');
+            $donHang->diachigiaohang = $request->input('address');
+            $donHang->tinh_tp =  $request->input('tinh_tp');
+            $donHang->nghi_chu = $request->input('nghi_chu') ?? '';
+            $donHang->trangthai = 0;
+            $donHang->save();
+            $idDonHang = $donHang->id_dh;
+            $cartBillList = session()->get('product_cart');
+            foreach ($cartBillList as $key => $value) {
+                Donhangchitiet::create([
+                    'id_dh' => $idDonHang,
+                    'id_user' => 1,
+                    'ten_sp' => $value['product_name'],
+                    'id_sp' => $key,
+                    'gia' => $value['price'],
+                    'soluong' => $value['quantity']
+                ]);
+            }
+            return redirect(route('home-page'));
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
         }
-        $donHang->id_user = '11';
-        $donHang->thoidiemmua =  date('Y-m-d H:i:s');
-        $donHang->tennguoinhan = $_POST['firstName'] . ' ' . $_POST['lastName'];
-        $donHang->dienthoai = $_POST['phoneNumber'];
-        $donHang->diachigiaohang = $_POST['address'];
-        $donHang->trangthai = 0;
-        $donHang->save();
-        $idDonHang = $donHang->id_dh;
-        $cartBillList = session()->get('product_cart');
-        foreach ($cartBillList as $key => $value) {
-            Donhangchitiet::create([
-                'id_dh' => $idDonHang,
-                'id_user' => 1,
-                'ten_sp' => $value['product_name'],
-                'id_sp' => $key,
-                'gia' => $value['price'],
-                'soluong' => $value['quantity']
-            ]);
-        }
-        return back()->with('message', 'mua hàng thành công');
     }
     function showTablet(Request $request)
     {

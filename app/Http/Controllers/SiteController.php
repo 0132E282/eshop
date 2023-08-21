@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Donhang;
 use App\Models\Donhangchitiet;
+use App\Models\post;
 use App\Models\Sanpham;
 use Illuminate\Support\Facades\DB;
 
@@ -18,7 +19,7 @@ class SiteController extends Controller
         $titleListProduct = DB::table('loai')->limit('5')->get();
         $hotListProduct = DB::table('sanpham')->where('hot', '=', 1)->orderBy('ngay', 'asc')->limit('8')->get();
         $categories = DB::table('loai')->get();
-
+        $postList = post::all();
         $slider = Banner::where('location', '=', 'slider')->get();
         $banner['small-banner'] = Banner::where('location', '=', 'small-banner')->limit(3)->get();
         $banner['medium-banner'] = Banner::where('location', '=', 'medium-banner')->limit(2)->get();
@@ -31,6 +32,7 @@ class SiteController extends Controller
                 'hotListProduct' => $hotListProduct,
                 'categories' => $categories,
                 'isShowCategories' => $isShowCategories,
+                'postList' => $postList,
                 'slider' => $slider,
                 'bannerList' => $banner,
             ]
