@@ -7,9 +7,11 @@ use App\Models\Loaisanpham;
 use App\Models\Sanpham;
 use App\Models\Sanphamchitiet;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
+use Symfony\Component\Console\Input\Input;
 
 class ProductsController extends Controller
 {
@@ -68,20 +70,17 @@ class ProductsController extends Controller
    function update(Request $request, $id)
    { // upload image file
       try {
-         $image = $request->file('thumbnail_image');
-         $storedPath = $image->move('assets-web/images/products', $image->getClientOriginalName());
-         Sanpham::find($id)->update([
-            'id_loai' => 2,
-            'hinh' => $storedPath,
-            'ten_sp' => $_POST['ten_sp'] ?? '',
-            'hinh' => '',
-            'gia' =>  $_POST['gia'] ?? '',
-            'mota' => $_POST['mota'] ?? '',
-            'ngay' =>   date('Y-m-d H:i:s')
+         $sp = Sanpham::find($id);
+         $sp->update([
+            'id_loai' => $request->input('id_loai') ?? $sp->id_loai,
+            'ten_sp' => $_POST['ten_sp'] ?? $sp->ten_sp,
+            'hinh' => Session()->get('url_image') ?? $sp->hinh,
+            'gia' =>  intval(str_replace(',', '', $_POST['gia']))  ?? $sp->gia,
+            'mota' => $_POST['mota'] ?? $sp->mota,
          ]);
-         return back()->with('message_successfully', 'update thành công');
+         return back()->with('successfully', 'update thành công id :' . $sp->id_loai);
       } catch (Exception $e) {
-         return back()->with('message_error', $e);
+         return back()->with('error', $e);
       }
    }
    function shopDetails($id)
@@ -104,19 +103,12 @@ class ProductsController extends Controller
    }
    function create(ValidateFormCreateProduct $validate)
    {
-
       try {
          if ($validate) {
-            $storedPath = '';
-            if ($validate->has('thumbnail_image')) {
-               $image = $validate->file('thumbnail_image');
-               $storedPath = url($image->move('assets-web\images\products', $image->getClientOriginalName()));
-            }
-
             $sp = new Sanpham();
             $sp->id_loai = $_POST['loai'] ?? 0;
             $sp->ten_sp = $_POST['ten_sp'] ?? 'http://127.0.0.1:8000/assets-web/images/products/defau.jpeg';
-            $sp->hinh = $storedPath ?? '';
+            $sp->hinh = Session()->get('url_image');
             // https://www.w3schools.com/php/func_var_intval.asp => chả về giá trị nguyên của môt biến
             // https://www.w3schools.com/PHP/func_string_str_replace.asp => tìm kiếm và thấy thế các ký tự
             $sp->gia =  intval(str_replace(',', '', $_POST['gia'])) ?? '';

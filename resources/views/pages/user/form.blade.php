@@ -4,6 +4,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin</title>
 @stop
+@php
+
+$administrationList = [
+[
+'id' => 0,
+'title' => 'thường',
+],
+[
+'id' => 1,
+'title' => 'quản trị viên',
+]
+];
+@endphp
 @section('content')
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">

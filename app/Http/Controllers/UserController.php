@@ -12,39 +12,47 @@ class UserController extends Controller
     // show list accounts for all users
     function showTable()
     {
-        $administrationList = [
-            [
-                'id' => 0,
-                'title' => 'thường',
+        $table = [
+            'avatar' =>  [
+                'type' => 'images',
+                'name' => 'hình nền',
             ],
-            [
-                'id' => 1,
-                'title' => 'quản trị viên',
+            'name' =>  [
+                'type' => 'text',
+                'name' => 'tên',
+                'link' => ['update-user', 'id'],
+            ],
+            'email' => [
+                'type' => 'email',
+                'name' => 'email'
+            ],
+            'created_at' => [
+                'type' => 'text',
+                'name' => 'ngày tạo'
+            ],
+            'id' => [
+                'type' => 'select',
+                'name' => 'phân quyền'
             ]
         ];
-        $currentRoute = Route::current();
-        $quantity = 25;
-        $userList = $currentRoute->getName() === 'trash-user' ? User::onlyTrashed()->paginate($quantity) :  $userList = User::paginate($quantity);
-        return view('pages/table/tabletUser', ['dataTablet' => $userList, 'pages' => $userList, 'administrationList' => $administrationList]);
+        try {
+            $currentRoute = Route::current();
+            $quantity = 25;
+            $userList = $currentRoute->getName() === 'trash-user' ? User::onlyTrashed()->paginate($quantity) :  $userList = User::paginate($quantity);
+            return view('pages/table/tabletUser', ['dataTablet' => $userList, 'pages' => $userList, 'tablet' => $table]);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 
 
     function showForm($id = '')
     {
-        $administrationList = [
-            [
-                'id' => 0,
-                'title' => 'thường',
-            ],
-            [
-                'id' => 1,
-                'title' => 'quản trị viên',
-            ]
-        ];
+
         $user = [];
         try {
             if ($id) $user = User::find($id);
-            return view('pages/user/form', ['user' => $user, 'administrationList' => $administrationList]);
+            return view('pages/user/form', ['user' => $user]);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }

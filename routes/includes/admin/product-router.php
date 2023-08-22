@@ -7,7 +7,7 @@ Route::post('/create-tag', [ProductsController::class, 'createTagList'])->name('
 Route::get('/category', [ProductsController::class, 'category'])->name('category');
 Route::delete('/{id}', [ProductsController::class, 'deleteProduct'])->name('delete-product');
 Route::delete('/products', [ProductsController::class, 'deleteProduct'])->name('delete-product-list');
-Route::post('/create', [ProductsController::class, 'create'])->name('action-create-product');
+Route::post('/create', [ProductsController::class, 'create'])->name('action-create-product')->middleware('upload-image');
 Route::get('/create', [ProductsController::class, 'showForm'])->name('create-product-page');
 Route::post('/{id}', [ProductsController::class, 'update'])->name('action-update-product');
 Route::get('/{id}', [ProductsController::class, 'showForm'])->name('update-product-page');
