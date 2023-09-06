@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\authController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
-
-
+use PHPUnit\Framework\TestStatus\Risky;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +52,7 @@ Route::prefix('admin')->group(function () {
         Route::prefix('post')->group(function () {
             include_once('includes/admin/post-router.php');
         });
+        Route::post('/upload-images', [SiteController::class, 'uploadImages'])->name('upload-images');
     });
     Route::get('/login', [authController::class, 'index'])->name('login-page');
     Route::post('/login', [authController::class, 'loginAdmin']);

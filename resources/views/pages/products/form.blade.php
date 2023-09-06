@@ -11,7 +11,7 @@
         {{Session::get('successfully') ?? Session::get('errors') }} <i class="bi bi-check-circle-fill"></i>
     </div>
     @endif
-    <form action="{{isset($product->id_sp) ? route('action-update-product',['id'=>$product->id_sp]) : route( 'action-create-product') }}" method="POST" class="d-flex mt-5" enctype="multipart/form-data">
+    <form action="{{isset($product->id_sp) ? route('action-update-product',['id'=>$product->id_sp]) : route( 'action-create-product') }}" method="POST" class="d-flex mt-5">
         @csrf
         <div class="container-sm">
             @include('includes.products.forms.input')
@@ -20,7 +20,7 @@
             @include('includes.products.forms.formSidebar')
         </aside>
     </form>
-
+    @include('includes.modal.imagesList')
 </div>
 @stop
 <script>

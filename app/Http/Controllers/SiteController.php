@@ -3,40 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
-use App\Models\Donhang;
-use App\Models\Donhangchitiet;
+use App\Models\Loaisanpham;
 use App\Models\post;
 use App\Models\Sanpham;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class SiteController extends Controller
 {
+    protected $modelProduct;
+    protected $modelBanner;
+    protected $modelTypeProduct;
+    function __construct()
+    {
+        $this->modelProduct = new Sanpham();
+        $this->modelBanner = new Banner();
+        $this->modelTypeProduct = new Loaisanpham();
+    }
     function index()
     {
-        $banner = [];
-        $title_product = $_GET['title-product'] ?? 1;
-        $treadingProduct = DB::table('sanpham')->where('id_loai', '=', $title_product)->select('*')->limit('8')->orderby('soluotxem', 'asc')->get();
-        $titleListProduct = DB::table('loai')->limit('5')->get();
-        $hotListProduct = DB::table('sanpham')->where('hot', '=', 1)->orderBy('ngay', 'asc')->limit('8')->get();
-        $categories = DB::table('loai')->get();
-        $postList = post::all();
-        $slider = Banner::where('location', '=', 'slider')->get();
-        $banner['small-banner'] = Banner::where('location', '=', 'small-banner')->limit(3)->get();
-        $banner['medium-banner'] = Banner::where('location', '=', 'medium-banner')->limit(2)->get();
-        $isShowCategories = true;
-        return View(
-            'pages.site.home.homeWeb',
-            [
-                'treadingProduct' => $treadingProduct,
-                'titleListProduct' => $titleListProduct,
-                'hotListProduct' => $hotListProduct,
-                'categories' => $categories,
-                'isShowCategories' => $isShowCategories,
-                'postList' => $postList,
-                'slider' => $slider,
-                'bannerList' => $banner,
-            ]
-        );
+        try {
+            $banner = [];
+            $title_product = $_GET['title-product'] ?? 1;
+
+            $treadingProduct = $this->modelProduct->limit('8')->where('soluongbanhang', '>', 0)->orderby('soluongbanhang', 'asc')->get();
+
+            $titleListProduct = DB::table('loai')->limit('5')->get();
+            $hotListProduct = $this->modelProduct->orderBy('soluotxem', 'asc')->limit('8')->get();
+
+            $categories = DB::table('loai')->get();
+            $postList = post::all();
+            $slider = Banner::where('location', '=', 'slider')->get();
+            $banner['small-banner'] = Banner::where('location', '=', 'small-banner')->limit(3)->get();
+            $banner['medium-banner'] = Banner::where('location', '=', 'medium-banner')->limit(2)->get();
+            $isShowCategories = true;
+            return View(
+                'pages.site.home.homeWeb',
+                [
+                    'treadingProduct' => $treadingProduct,
+                    'titleListProduct' => $titleListProduct,
+                    'hotListProduct' => $hotListProduct,
+                    'categories' => $categories,
+                    'isShowCategories' => $isShowCategories,
+                    'postList' => $postList,
+                    'slider' => $slider,
+                    'bannerList' => $banner,
+                ]
+            );
+        } catch (\Exception $e) {
+        }
     }
     function showContactPage()
     {
@@ -53,5 +72,25 @@ class SiteController extends Controller
         // $order = Donhangchitiet::all();
         // return response()->json($earn);
         return View('pages.site.home.homeAdmin', ['earnings' => $earnings]);
+    }
+    function uploadImages(Request $req)
+    {
+        try {
+            $urlArray = [];
+            if ($req->hasFile('files-images')) {
+                $fileList = $req->file('files-images');
+                foreach ($fileList as $file) {
+                    $input['imagename'] = 'images';
+                    $imageName = time() . '.' . $file->getClientOriginalExtension();
+                    $img = Image::make($file->path())->resize(550, 750);
+                    $img->save($input['imagename'] . '/' . $imageName);
+                    $url =  URL::to($input['imagename'] . '/' . $imageName);
+                    array_push($urlArray, $url);
+                }
+                return back()->with('success', 'thành cong');
+            }
+        } catch (Exception $e) {
+            return response()->json($e->getMessage());
+        }
     }
 }

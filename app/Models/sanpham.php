@@ -11,7 +11,7 @@ class Sanpham extends Model
     protected $primaryKey = 'id_sp';
     protected $foreignKey = 'id_loai';
     protected $fillable = [
-        'ten_sp', 'gia', 'gia_km', 'mota', 'hinh', 'ngay', 'id_loai'
+        'ten_sp', 'soluongbanhang', 'gia', 'gia_km', 'mota', 'hinh', 'ngay', 'id_loai', 'soluotxem'
     ];
     use HasFactory;
 }

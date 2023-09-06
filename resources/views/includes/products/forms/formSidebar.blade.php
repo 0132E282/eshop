@@ -4,13 +4,12 @@
     </div>
     <div class="images-product">
         <h5 class="fw-bold">Ảnh sản phẩm</h5>
-        <div class="input py-2 ">
+        <div class="input py-2 thumbnail">
             <img src="{{$product->hinh ??'\assets-web\images\products\defau.jpeg'}}" class="mx-auto product-img" style="width: 100%; max-height: 200px;" alt="...">
             <div class="text-center">
-                <label class="text-primary text-decoration-underline-hover" for="formFileImages" style="cursor: pointer;">tải ảnh sản phẩm</label>
-                <input class="form-control" type="file" name="thumbnail_image" id="formFileImages" style="display: none;">
+                <button onclick="handleClickThumbnail(event)" class="text-primary text-decoration-underline-hover" data-bs-toggle="modal" type="button" data-bs-target="#uploadImages" style="cursor: pointer;">tải ảnh sản phẩm</button>
+                <input type="text" name="thumbnail_images" class="d-none">
             </div>
-            @error('thumbnail_image') <p class="text-danger ms-2" style="font-size: 12px;">{{$message}}</p> @enderror
         </div>
     </div>
     <div class="images-description-product">
@@ -22,23 +21,17 @@
             </h2>
             <div id="flush-collapseOne1" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                 <div class="categories-list mb-3">
-                    <div class="d-flex flex-wrap description-products_list-img justify-content-start">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
-                        <img src="" class="me-1 mt-1 product-img" style="width: 40px; max-height: 40px;" alt="...">
+                    <div class="d-flex flex-wrap description-products_list-img justify-content-start images-list">
+
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-center">
-            <label class="text-primary text-decoration-underline-hover" for="formFileImages" style="cursor: pointer;">tải ảnh sản phẩm</label>
-            <input class="form-control" type="file" name="description-img[]" id="formFileImages" style="display: none;">
+            <button data-bs-toggle="modal" type="button" data-bs-target="#uploadImages" onclick="handleClickImages(event)">tải ảnh sản phẩm</button>
+            <label class="text-primary text-decoration-underline-hover" for="image-slider" style="cursor: pointer;"></label>
+            <!-- <input onchange="uploadFilesImages(event)" class="form-control image-slider" type="file" name="images[]" id="image-slider" multiple> -->
         </div>
     </div>
     <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -73,28 +66,26 @@
 </div>
 <script src="/assets/js/main.js"></script>
 <script>
-    const uploadImages = document.querySelector('.images-product');
     const img = document.querySelector('.product-img');
-    img.style.display = 'none';
-    if (img.src) {
-        img.style.display = 'block';
-    }
-    uploadImages.addEventListener('change', function(e) {
-        const files = e.target.closest('input[type=file]').files[0];
-        const url = createUrl(files);
-        img.src = url;
-        img.style.display = 'block';
-    })
-    const descriptionImgProduct = document.querySelector('.description-products_list-img');
-    descriptionImgProduct.addEventListener('change', function(e) {
-        const files = e.target.closest('input[type=file]').files[0];
-    });
 
+    function handleClickImages(e) {
+        document.querySelector('.description-images').style.display = 'inline-block';
+        if (descriptionImages.length > 0) {
+            descriptionImages.forEach(element => {
+                const checkbox = document.querySelector('.images-list-modal > input[data-id="' + element.id + '"]');
+                checkbox.checked = true;
+            });
+        }
+    }
+
+    function handleClickThumbnail(e) {
+        const thumable = document.querySelector('.thumbnail-click');
+        thumable.style.display = 'inline-block';
+    }
 
     function handleClickSubmitTagsList(e) {
         const createTagList = document.querySelector('form');
         const inputTags = document.querySelector('.create-tags');
-        console.log(inputTags);
         if (inputTags.value) {
             createTagList.action = "/admin/ecommerce/products/create-tag";
             createTagList.submit();

@@ -22,7 +22,7 @@ class validateFormCreateProduct extends FormRequest
     public function rules(): array
     {
         return [
-            'thumbnail_image' => 'image|mimes:jpg,bmp,png',
+            'thumbnail_images' => 'required',
             'ten_sp' => 'required',
             'gia' => 'required',
         ];

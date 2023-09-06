@@ -16,7 +16,8 @@ class Sanphamchitiet extends Model
         'CPU',
         'Dia',
         'Mausac',
-        'Mausac'
+        'Mausac',
+        'anh_mo_ta'
     ];
     use HasFactory;
 }

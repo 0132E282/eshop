@@ -32,9 +32,9 @@ $administrationList = [
         @endif
         <div class="row mb-3">
             <label for="inputEmail3" class="col-sm-2 col-form-label">avatar</label>
-            <div class="input-group" style="width: 100px; height: 100px;">
+            <div class="input-group thumbnail" style="width: 100px; height: 100px;" onclick="handleClickThumbnail(event)" data-bs-toggle="modal" type="button" data-bs-target="#uploadImages">
                 <img src="{{$user->avatar ?? 'https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png'}}" class="img-thumbnail" alt="...">
-                <input type="file" value="{{$user->avatar ?? ''}}">
+                <input type="text" name="thumbnail_images" value="{{$user->avatar ?? ''}}" class="d-none">
             </div>
         </div>
         <div class="row mb-3">
@@ -82,4 +82,11 @@ $administrationList = [
         </div>
     </form>
 </div>
+@include('includes.modal.imagesList')
 @stop
+<script>
+    function handleClickThumbnail(e) {
+        const thumable = document.querySelector('.thumbnail-click');
+        thumable.style.display = 'inline-block';
+    }
+</script>

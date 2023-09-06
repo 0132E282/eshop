@@ -4,7 +4,22 @@
     width: 100%;
   }
 </style>
-
+@php
+$sort = [
+[
+'title' => 'không',
+'value' => ''
+],
+[
+'title' => 'ASC',
+'value' => 'ASC'
+],
+[
+'title' => 'DESC',
+'value' => 'DESC'
+],
+];
+@endphp
 <div class="row gy-2 gx-3 align-items-center">
   <div class="col-auto d-flex">
     <a href="{{$pages->url(1)}}" class="btn d-flex justify-content-center align-items-center" style="outline: none;">
@@ -29,12 +44,21 @@
   </div>
   @if(isset($tagList))
   <div class="col-auto">
-    <label class="visually-hidden" for="autoSizingSelect">sap xep</label>
+    <label class="visually-hidden" for="autoSizingSelect">sấp xếp</label>
     <select class="form-select" id="autoSizingSelect" onchange="handleGetTypeProduct(event)">
       <option value="{{route('product')}}" checkdate>tất cả</option>
       @foreach($tagList as $tag)
-
       <option value="{{route('searchProducts',$tag->ten_loai)}}" {{Route::current()->parameter('text') === $tag->ten_loai ? 'selected' : ''}}>{{$tag->ten_loai}}</option>
+      @endforeach
+    </select>
+  </div>
+  @endif
+  @if(isset($sort))
+  <div class="col-auto">
+    <label class="visually-hidden" for="autoSizingSelect">sấp xếp</label>
+    <select class="form-select" id="autoSizingSelect" onchange="handleGetTypeProduct(event)">
+      @foreach($sort as $item)
+      <option value="?{{$item['value']}}">{{$item['title']}}</option>
       @endforeach
     </select>
   </div>
@@ -54,13 +78,18 @@
 </div>
 <div class="btn-group" role="group" aria-label="Basic example">
   <a href="{{route('create-product-page')}}" type="button" class="btn btn-primary">tạo mới</a>
-  <button type="button" class="btn btn-primary" onclick="handleClickAcoinDelete(event)">xóa </button>
+  <button type="button" class="btn btn-primary" onclick="handleDelete()">xóa</button>
 </div>
 <a href="" class="links"></a>
 <script>
   const links = document.querySelector('.links');
   const listMenu = document.querySelector('.list-menu');
 
+  function handleDelete(e) {
+    const formSubmitTable = document.querySelector('.form-submit-table');
+    formSubmitTable.action = '/admin/ecommerce/products/delete-list';
+    formSubmitTable.submit();
+  }
   const handleSearchInput = function(e) {
     const searchInput = document.querySelector('.search-control');
     if (searchInput.value) {

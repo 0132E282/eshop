@@ -11,7 +11,7 @@
                     </thead>
                     <tbody>
 
-                        @foreach($productParameter as $key => $value )
+                        @foreach($productDetails->config as $key => $value )
                         <tr>
                             <td>{{$key}}</td>
                             <td>{{$value}}</td>

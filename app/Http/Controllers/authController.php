@@ -50,6 +50,7 @@ class authController extends Controller
                     'password' => Hash::make($_POST['password']),
                     'email' => $_POST['email'],
                     'isAdmin' => $_POST['isAdmin'] ?? 0,
+                    'avatar' => $_POST['thumbnail_images']
                 ]);
                 if (Route::current()->getName() === 'add-user') return back()->with('result', 'account created successfully');
                 return $result ? redirect('/admin/login') : throw ('không thành công');
@@ -67,7 +68,7 @@ class authController extends Controller
             $user->update([
                 'name' => $req->input('name') ?? $user->name,
                 'isAdmin' => $req->input('isAdmin') ?? $user->isAdmin,
-                'avatar' => $req->input('avatar') ?? $user->avatar,
+                'avatar' => $req->input('thumbnail_images') ?? $user->avatar,
             ]);
             return back()->with('success', 'thây đổi thành công');
         } catch (Exception $e) {

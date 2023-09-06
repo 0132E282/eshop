@@ -13,11 +13,11 @@
     <p class="price fs-4 fw-bold">
         <span class="discount me-2  text-warning">
             {{
-                $productDetails->gia_km ? number_format(0+str_replace(",","",$productDetails -> gia_km)) :
+                isset( $productDetails->gia_km) &&  $productDetails->gia_km    ? number_format(0+str_replace(",","",$productDetails -> gia_km)) :
                 number_format(0+str_replace(",","",$productDetails -> gia)) 
             }}đ
         </span>
-        @if($productDetails->gia_km)
+        @if(isset($productDetails->gia_km))
         <s>{{number_format(0+str_replace(",","",$productDetails -> gia))}}đ</s>
         @endif
     </p>
@@ -31,7 +31,7 @@
         </thead>
         <tbody>
 
-            @foreach($productParameter as $key => $value )
+            @foreach($productDetails->config as $key => $value )
             <tr>
                 <td>{{$key}}</td>
                 <td>{{$value}}</td>
